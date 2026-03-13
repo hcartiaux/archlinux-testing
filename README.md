@@ -33,13 +33,39 @@ archlinux-testing
 Run all tests:
 
 ```bash
-bats tests/
+$ bats tests/
+git.bats
+ ✓ git is installed
+ ✓ git reports a version
+ ✓ git init creates a repository
+ ✓ git can stage and commit a file
+ ✓ git log shows the commit
+openmp.bats
+ ✓ openmp is installed
+ ✓ clang can compile an openmp program
+ ✓ compiled program can be executed
+tar.bats
+ ✓ tar is installed
+ ✓ tar reports a version
+ ✓ tar can create an archive
+ ✓ tar can extract an archive
+ ✓ extracted file content matches original
+
+13 tests, 0 failures
 ```
 
 Run a single file:
 
 ```bash
-bats tests/git.bats
+$ bats tests/git.bats
+git.bats
+ ✓ git is installed
+ ✓ git reports a version
+ ✓ git init creates a repository
+ ✓ git can stage and commit a file
+ ✓ git log shows the commit
+
+5 tests, 0 failures
 ```
 
 ## How it works
