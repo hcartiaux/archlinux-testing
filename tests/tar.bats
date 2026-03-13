@@ -18,7 +18,6 @@ load '../helpers/container'
   crun bash -c "
     mkdir -p /tmp/tartest/src
     echo 'hello' > /tmp/tartest/src/file.txt
-    ls bla
     tar -czf /tmp/tartest/archive.tar.gz -C /tmp/tartest/src .
   "
   crun [ -f '/tmp/tartest/archive.tar.gz' ]
