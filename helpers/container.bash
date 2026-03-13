@@ -5,12 +5,12 @@
 ARCH_IMAGE="archlinux:latest"
 
 # Container timeout
-TIMEOUT="60m"
+TIMEOUT="3600"
 
-# Temp file (container name)
+# Temp file (contains the running container name)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name"
 
-# Start a container with [testing] repo enabled
+# Start a container with [testing] repos enabled
 container_start() {
   local instance_id="arch-bats-$$-${RANDOM}"
   echo "$instance_id" > "$_CONTAINER_NAME_FILE"
@@ -24,10 +24,10 @@ container_start() {
   local host_source_dir="${project_root}/files/${test_suite_name}"
   local container_work_dir="/files"
 
-  # Construct the volume flag only if the source directory exists
+  # Construct the volume mapping parameter
   local volume_mount_flag=()
   if [ -d "$host_source_dir" ]; then
-    volume_mount_flag=(-v "${host_source_dir}:${container_work_dir}:Z")
+    volume_mount_flag=(-v "${host_source_dir}:${container_work_dir}:ro,Z")
   fi
 
   # Launch the container in the background
@@ -54,7 +54,7 @@ container_stop() {
   local name
   name="$(cat "$_CONTAINER_NAME_FILE" 2>/dev/null)"
   if [[ -n "$name" ]]; then
-    podman rm -f "$name" >/dev/null 2>&1
+    podman rm -f "$name" >/dev/null 2>&1 || true
     rm -f "$_CONTAINER_NAME_FILE"
   fi
 }
@@ -62,7 +62,7 @@ container_stop() {
 # Run a command inside the current container
 crun() {
   local name
-  name="$(cat "$_CONTAINER_NAME_FILE")"
+  name="$(cat "$_CONTAINER_NAME_FILE" 2>/dev/null)"
   if podman exec "$name" test -d /files; then
     run podman exec -w /files "$name" "$@"
   else
@@ -73,7 +73,9 @@ crun() {
 # Set-up the testing environment
 setup_file() {
   container_start
-  crun pacman -S --noconfirm "${PACKAGES[@]}"
+  if [[ ${#PACKAGES[@]} -gt 0 ]]; then
+    crun pacman -S --noconfirm "${PACKAGES[@]}"
+  fi
 }
 
 # Clean-up the testing environment
