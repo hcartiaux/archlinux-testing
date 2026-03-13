@@ -1,4 +1,4 @@
 setup() {
-  load /usr/lib/bats/bats-support/load
-  load /usr/lib/bats/bats-assert/load
+  bats_load_library bats-support
+  bats_load_library bats-assert
 }
