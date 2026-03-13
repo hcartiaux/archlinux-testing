@@ -50,7 +50,7 @@ This mechanism is implemented inside `helpers/container.bash`, when a file is ru
 
 1. `setup_file` is called:
    - a new container is started with `container_start`
-   - `$PACKAGES` are installed with `cpacman`
+   - `$PACKAGES` are installed
 2. `@test` blocks are run
 3. `teardown_file` is called
    - the container is stopped and removed
