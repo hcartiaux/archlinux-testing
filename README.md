@@ -1,6 +1,6 @@
 # Archlinux Testing Suite
 
-Functional testing suite for Arch Linux [testing] repository packages,
+Functional testing suite for Arch Linux packages in [*-testing] repositories,
 using [bats](https://github.com/bats-core/bats-core) and podman.
 
 ## Structure
