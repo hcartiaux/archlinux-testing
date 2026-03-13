@@ -90,5 +90,5 @@ This mechanism is implemented inside `helpers/container.bash`, when a file is ru
 
 1. Place necessary assets, scripts, source code in `tests/<package>`
 2. Create `tests/<package>.bats` from a simple test file such as `tar.bats` or `openmp.bats`
-3. UPDATE the `$PACKAGES` variable
+3. Update the `$PACKAGES` variable
 4. Write `@test` blocks using `crun` to run commands inside the container
