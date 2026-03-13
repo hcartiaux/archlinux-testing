@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# helpers/container.bash — shared podman helpers for the test suite
+# Shared podman helpers for the test suite
 
 # Container image
 ARCH_IMAGE="archlinux:latest"

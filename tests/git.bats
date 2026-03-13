@@ -1,5 +1,4 @@
 #!/usr/bin/env bats
-# tests/git.bats — functional tests for git
 
 export PACKAGES="git"
 load '../helpers/setup'

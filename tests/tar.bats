@@ -1,5 +1,4 @@
 #!/usr/bin/env bats
-# tests/tar.bats — functional tests for tar
 
 export PACKAGES="tar"
 load '../helpers/setup'
