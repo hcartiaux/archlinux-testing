@@ -38,7 +38,7 @@ container_start() {
     sleep "$TIMEOUT"
 
   # Enable testing repositories in pacman.conf
-  podman exec "$instance_id" sed -i             \
+  crun sed -i                                   \
     -e '/^#\[core-testing\]/s/^#//'             \
     -e '/^#\[extra-testing\]/s/^#//'            \
     -e '/^\[core-testing\]/,/^Include/ s/^#//'  \
@@ -46,7 +46,7 @@ container_start() {
     /etc/pacman.conf
 
   # Sync and upgrade to ensure we are actually using the testing repos
-  podman exec "$instance_id" pacman -Syu --noconfirm
+  crun pacman -Syu --noconfirm
 }
 
 # Stop the container
