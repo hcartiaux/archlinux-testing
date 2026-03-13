@@ -4,6 +4,9 @@
 # Container image
 ARCH_IMAGE="archlinux:latest"
 
+# Container timeout
+TIMEOUT="60m"
+
 # Temp file (container name)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name-${PACKAGES}"
 
@@ -12,7 +15,7 @@ container_start() {
   local name="arch-bats-$$-${RANDOM}"
   echo "$name" > "$_CONTAINER_NAME_FILE"
 
-  podman run --rm -d --name "$name" "$ARCH_IMAGE" sleep infinity
+  podman run --rm -d --name "$name" "$ARCH_IMAGE" sleep $TIMEOUT
 
   podman exec "$name" sed -i \
    -e '/^#\[core-testing\]/s/^#//' \
