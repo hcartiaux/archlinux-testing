@@ -6,7 +6,8 @@ load '../helpers/setup'
 load '../helpers/container'
 
 @test "git is installed" {
-  assert [ -f '/usr/bin/git' ]
+  crun [ -f '/usr/bin/git' ]
+  assert_success
 }
 
 @test "git reports a version" {

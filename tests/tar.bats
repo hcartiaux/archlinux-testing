@@ -6,7 +6,8 @@ load '../helpers/setup'
 load '../helpers/container'
 
 @test "tar is installed" {
-  assert [ -f /usr/bin/tar ]
+  crun [ -f /usr/bin/tar ]
+  assert_success
 }
 
 @test "tar reports a version" {
