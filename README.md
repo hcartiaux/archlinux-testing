@@ -25,8 +25,8 @@ archlinux-testing
 
 - `podman`
 - `bats`
+- `bats-support`
 - `bats-assert`
-- `bats-file`
 
 ## Running
 
