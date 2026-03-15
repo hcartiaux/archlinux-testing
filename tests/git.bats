@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 export PACKAGES="git"
+
 load '../helpers/setup'
-load '../helpers/container'
 
 @test "git is installed" {
   crun [ -f '/usr/bin/git' ]

@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 export PACKAGES=(mpdecimal python)
+
 load '../helpers/setup'
-load '../helpers/container'
 
 @test "Python is linked to mpdecimal" {
   crun bash <<'EOF'

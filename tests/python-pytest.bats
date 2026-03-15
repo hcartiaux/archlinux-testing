@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 export PACKAGES=(python-pytest)
+
 load '../helpers/setup'
-load '../helpers/container'
 
 @test "python-pytest is installed" {
   crun [ -f /usr/bin/pytest ]

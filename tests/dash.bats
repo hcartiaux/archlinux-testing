@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 export PACKAGES=(dash)
+
 load '../helpers/setup'
-load '../helpers/container'
 
 @test "dash is installed" {
   crun [ -f /usr/bin/dash ]

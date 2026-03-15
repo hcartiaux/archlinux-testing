@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 export PACKAGES="tar"
+
 load '../helpers/setup'
-load '../helpers/container'
 
 @test "tar is installed" {
   crun [ -f /usr/bin/tar ]

@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
 export PACKAGES=(openmp clang)
+
 load '../helpers/setup'
-load '../helpers/container'
 
 @test "openmp is installed" {
   crun [ -f /usr/lib/libomp.so ]

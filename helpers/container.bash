@@ -10,20 +10,6 @@ TIMEOUT="3600"
 # Temp file (contains the running container name)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name"
 
-fail() {
-  echo " ✗ $*" >&3
-  return 1
-}
-
-success() {
-  echo " ✓ $*" >&3
-  return 0
-}
-
-newline() {
-  echo >&3
-}
-
 # Start a container with [testing] repos enabled
 container_start() {
   local instance_id="arch-bats-$$-${RANDOM}"
