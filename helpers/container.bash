@@ -20,6 +20,10 @@ success() {
   return 0
 }
 
+newline() {
+  echo >&3
+}
+
 # Start a container with [testing] repos enabled
 container_start() {
   local instance_id="arch-bats-$$-${RANDOM}"
@@ -89,7 +93,11 @@ install_packages() {
     crun pacman -S --noconfirm "${PACKAGES[@]}"
     [ "$status" -ne 0 ] && fail "Failed to install packages: ${PACKAGES[*]}"
   fi
-  return 0
+  success "Packages:"
+  for pkg in "${PACKAGES[@]}"; do
+    crun bash -c "pacman -Qi ${pkg} | awk '/^Version/ {print \$3}'"
+    echo "  📦 ${pkg}: ${output} $status" >&3
+  done
 }
 
 # Set-up the testing environment
@@ -101,4 +109,5 @@ setup_file() {
 # Clean-up the testing environment
 teardown_file() {
   container_stop
+  newline
 }
