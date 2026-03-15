@@ -7,18 +7,19 @@ using [bats](https://github.com/bats-core/bats-core) and podman.
 
 ```
 archlinux-testing
-├── README.md          # this file
+├── README.md          # project documentation
 ├── helpers
-│   ├── container.bash # shared podman lifecycle helpers
-│   └── setup.bash     # shared bats setup helpers
+│   ├── setup.bash     # shared bats setup
+│   ├── container.bash # podman container management
+│   └── utils.bash     # general utility functions
 ├── tests
-│    ├── git.bats      # functional tests for git
-│    ├── tar.bats      # functional tests for tar
-│    ├── openmp.bats   # functional tests for openmp
-│    └── ...
+│   ├── git.bats       # functional tests for git
+│   ├── tar.bats       # functional tests for tar
+│   ├── openmp.bats    # functional tests for openmp
+│   └── ...
 └── files
-     ├── openmp        # files required by openmp.bats
-     └── ...
+    ├── openmp         # assets for openmp.bats
+    └── ...
 ```
 
 ## Requirements
