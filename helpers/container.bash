@@ -10,6 +10,16 @@ TIMEOUT="3600"
 # Temp file (contains the running container name)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name"
 
+fail() {
+  echo " ✗ $*" >&3
+  return 1
+}
+
+success() {
+  echo " ✓ $*" >&3
+  return 0
+}
+
 # Start a container with [testing] repos enabled
 container_start() {
   local instance_id="arch-bats-$$-${RANDOM}"
@@ -31,22 +41,13 @@ container_start() {
   fi
 
   # Launch the container in the background
-  podman run --rm -d          \
+  if ! podman run --rm -d      \
     "${volume_mount_flag[@]}" \
     --name "$instance_id"     \
     "$ARCH_IMAGE"             \
-    sleep "$TIMEOUT"
-
-  # Enable testing repositories in pacman.conf
-  crun sed -i                                   \
-    -e '/^#\[core-testing\]/s/^#//'             \
-    -e '/^#\[extra-testing\]/s/^#//'            \
-    -e '/^\[core-testing\]/,/^Include/ s/^#//'  \
-    -e '/^\[extra-testing\]/,/^Include/ s/^#//' \
-    /etc/pacman.conf
-
-  # Sync and upgrade to ensure we are actually using the testing repos
-  crun pacman -Syu --noconfirm
+    sleep "$TIMEOUT"; then
+    fail "Failed to start container $instance_id ($ARCH_IMAGE)"
+  fi
 }
 
 # Stop the container
@@ -70,12 +71,31 @@ crun() {
   fi
 }
 
+install_packages() {
+  # Enable testing repositories in pacman.conf
+  crun sed -i                                   \
+    -e '/^#\[core-testing\]/s/^#//'             \
+    -e '/^#\[extra-testing\]/s/^#//'            \
+    -e '/^\[core-testing\]/,/^Include/ s/^#//'  \
+    -e '/^\[extra-testing\]/,/^Include/ s/^#//' \
+    /etc/pacman.conf
+  [ "$status" -ne 0 ] && fail "Failed to enable testing repositories"
+
+  # Sync and upgrade to ensure we are actually using the testing repos
+  crun pacman -Syu --noconfirm
+  [ "$status" -ne 0 ] && fail "Failed to sync and upgrade packages"
+
+  if [[ ${#PACKAGES[@]} -gt 0 ]]; then
+    crun pacman -S --noconfirm "${PACKAGES[@]}"
+    [ "$status" -ne 0 ] && fail "Failed to install packages: ${PACKAGES[*]}"
+  fi
+  return 0
+}
+
 # Set-up the testing environment
 setup_file() {
   container_start
-  if [[ ${#PACKAGES[@]} -gt 0 ]]; then
-    crun pacman -S --noconfirm "${PACKAGES[@]}"
-  fi
+  install_packages
 }
 
 # Clean-up the testing environment
