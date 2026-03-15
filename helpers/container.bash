@@ -82,7 +82,7 @@ install_packages() {
   success "Packages:"
   for pkg in "${PACKAGES[@]}"; do
     crun bash -c "pacman -Qi ${pkg} | awk '/^Version/ {print \$3}'"
-    echo "  📦 ${pkg}: ${output} $status" >&3
+    echo "  📦 ${pkg}: ${output}" >&3
   done
 }
 

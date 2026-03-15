@@ -38,7 +38,7 @@ $ bats tests/
 git.bats
 
  ✓ Packages:
-  📦 git: 2.53.0-1 0
+  📦 git: 2.53.0-1
  ✓ git is installed
  ✓ git reports a version
  ✓ git init creates a repository
@@ -48,8 +48,8 @@ git.bats
 openmp.bats
 
  ✓ Packages:
-  📦 openmp: 22.1.1-1 0
-  📦 clang: 22.1.1-1 0
+  📦 openmp: 22.1.1-1
+  📦 clang: 22.1.1-1
  ✓ openmp is installed
  ✓ clang can compile an openmp program
  ✓ compiled program can be executed
@@ -57,7 +57,7 @@ openmp.bats
 tar.bats
 
  ✓ Packages:
-  📦 tar: 1.35-2 0
+  📦 tar: 1.35-2
  ✓ tar is installed
  ✓ tar reports a version
  ✓ tar can create an archive
@@ -74,7 +74,7 @@ $ bats tests/git.bats
 git.bats
 
  ✓ Packages:
-  📦 git: 2.53.0-1 0
+  📦 git: 2.53.0-1
  ✓ git is installed
  ✓ git reports a version
  ✓ git init creates a repository
