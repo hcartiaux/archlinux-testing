@@ -65,9 +65,9 @@ crun() {
 }
 
 install_packages() {
-  local -a PACKAGES
-  PACKAGES+=("$(basename "${BATS_TEST_FILENAME}" .bats)")
-  PACKAGES+=("${EXTRA_PACKAGES[@]}")
+  local -a packages
+  packages+=("$(basename "${BATS_TEST_FILENAME}" .bats)")
+  packages+=("${DEPENDS[@]}")
 
   # Enable testing repositories in pacman.conf
   crun sed -i                                   \
@@ -82,12 +82,12 @@ install_packages() {
   crun pacman -Syu --noconfirm
   [ "$status" -ne 0 ] && fail "Failed to sync and upgrade packages"
 
-  if [[ ${#PACKAGES[@]} -gt 0 ]]; then
-    crun pacman -S --noconfirm "${PACKAGES[@]}"
-    [ "$status" -ne 0 ] && fail "Failed to install packages: ${PACKAGES[*]}"
+  if [[ ${#packages[@]} -gt 0 ]]; then
+    crun pacman -S --noconfirm "${packages[@]}"
+    [ "$status" -ne 0 ] && fail "Failed to install packages: ${packages[*]}"
   fi
   success "Package list:"
-  for pkg in "${PACKAGES[@]}"; do
+  for pkg in "${packages[@]}"; do
     crun bash -c "pacman -Qi ${pkg} | awk '/^Version/ {print \$3}'"
     echo "  📦 ${pkg}: ${output}" >&3
   done

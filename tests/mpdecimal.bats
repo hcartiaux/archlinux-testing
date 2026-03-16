@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-export EXTRA_PACKAGES=(python)
+export DEPENDS=(python)
 
 load ../helpers/setup
 

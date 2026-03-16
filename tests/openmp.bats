@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-export EXTRA_PACKAGES=(clang)
+export DEPENDS=(clang)
 
 load ../helpers/setup
 
