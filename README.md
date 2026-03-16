@@ -89,16 +89,17 @@ git.bats
 
 Each `.bats` file gets its own fresh `archlinux:latest` container:
 
-- `$PACKAGES` is a space-separated list of packages to install in the container
+- `$DEPENDS` is an array containing the list of packages to install in the
+  container, additionally to the package being tested
 - the associated directory under `files` is mapped to `/files`
 - instead of using the `run` function of bats, use `crun` to execute commands
-  inside the container (current directory is `/files` if available)
+  inside the container (current directory is `/files` if available or `/tmp`)
 
 This mechanism is implemented inside `helpers/container.bash`, when a file is run:
 
 1. `setup_file` is called:
    - a new container is started with `container_start`
-   - `$PACKAGES` are installed
+   - `$DEPENDS` are installed
 2. `@test` blocks are run
 3. `teardown_file` is called
    - the container is stopped and removed
@@ -107,5 +108,5 @@ This mechanism is implemented inside `helpers/container.bash`, when a file is ru
 
 1. Place necessary assets, scripts, source code in `tests/<package>`
 2. Create `tests/<package>.bats` from a simple test file such as `tar.bats` or `openmp.bats`
-3. Update the `$PACKAGES` variable
+3. Update the `$DEPENDS` array
 4. Write `@test` blocks using `crun` to run commands inside the container
