@@ -14,9 +14,10 @@ newline() {
   echo >&3
 }
 
-is_file_linked_to() {
+is_linked_by_file() {
   local file="$1"
   local dep="$2"
+  [ -z "$dep" ] && dep=$(basename "${BATS_TEST_FILENAME}" .bats)
   local linked_libs
 
   crun bash -c "
@@ -28,11 +29,12 @@ is_file_linked_to() {
   "
 }
 
-is_pkg_linked_to() {
+is_linked_by_pkg() {
   local pkg="$1"
   local dep="$2"
-  local -a files
+  [ -z "$dep" ] && dep=$(basename "${BATS_TEST_FILENAME}" .bats)
 
+  local -a files
   crun bash -c "
       pkg_files=\"\$(pacman -Qlq '$pkg')\"
       {
@@ -43,9 +45,9 @@ is_pkg_linked_to() {
   mapfile -t files <<< "$output"
 
   for f in "${files[@]}"; do
-    is_file_linked_to "$f" "$dep"
+    is_linked_by_file "$f" "$dep"
     if [[ $status == 0 ]]; then
-      output="$pkg is linked to $dep ($f => $output)"
+      output="$pkg is linked to $dep by $f"
       status=0
       return
     fi
