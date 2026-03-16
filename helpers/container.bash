@@ -9,6 +9,7 @@ TIMEOUT="3600"
 
 # Temp file (contains the running container name)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name"
+_CONTAINER_WORK_DIR="${BATS_SUITE_TMPDIR}/container-work-dir"
 
 # Start a container with [testing] repos enabled
 container_start() {
@@ -27,7 +28,10 @@ container_start() {
   # Construct the volume mapping parameter
   local volume_mount_flag=()
   if [ -d "$host_source_dir" ]; then
+    echo $container_work_dir > "$_CONTAINER_WORK_DIR"
     volume_mount_flag=(-v "${host_source_dir}:${container_work_dir}:ro,Z")
+  else
+    echo /tmp/ > "$_CONTAINER_WORK_DIR"
   fi
 
   # Launch the container in the background
@@ -47,6 +51,7 @@ container_stop() {
   if [[ -n "$name" ]]; then
     podman rm -f "$name" >/dev/null 2>&1 || true
     rm -f "$_CONTAINER_NAME_FILE"
+    rm -f "$_CONTAINER_WORK_DIR"
   fi
 }
 
@@ -54,11 +59,9 @@ container_stop() {
 crun() {
   local name
   name="$(cat "$_CONTAINER_NAME_FILE" 2>/dev/null)"
-  if podman exec "$name" test -d /files; then
-    run podman exec -w /files "$name" "$@"
-  else
-    run podman exec "$name" "$@"
-  fi
+  local container_work_dir
+  container_work_dir="$(cat "$_CONTAINER_WORK_DIR" 2>/dev/null)"
+  run podman exec -w "$container_work_dir" "$name" "$@"
 }
 
 install_packages() {
