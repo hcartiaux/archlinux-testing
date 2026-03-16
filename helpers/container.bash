@@ -7,10 +7,12 @@ ARCH_IMAGE="archlinux:latest"
 # Container timeout
 TIMEOUT="3600"
 
-# Temp file (contains the running container name)
+# Package being tested
+_TARGET="$(basename "${BATS_TEST_FILENAME}" .bats)"
+
+# Temp file (contains the running container name and work directory)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name"
 _CONTAINER_WORK_DIR="${BATS_SUITE_TMPDIR}/container-work-dir"
-_TARGET="$(basename "${BATS_TEST_FILENAME}" .bats)"
 
 # Start a container with [testing] repos enabled
 container_start() {
