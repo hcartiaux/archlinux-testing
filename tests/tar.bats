@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
 
-export PACKAGES=(tar)
-
 load ../helpers/setup
 
 @test "tar is installed" {

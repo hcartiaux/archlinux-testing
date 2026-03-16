@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
 
-export PACKAGES=(git)
-
 load ../helpers/setup
 
 @test "git is installed" {

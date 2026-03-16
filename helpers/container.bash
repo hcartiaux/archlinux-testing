@@ -10,6 +10,7 @@ TIMEOUT="3600"
 # Temp file (contains the running container name)
 _CONTAINER_NAME_FILE="${BATS_SUITE_TMPDIR}/container-name"
 _CONTAINER_WORK_DIR="${BATS_SUITE_TMPDIR}/container-work-dir"
+_TARGET="$(basename "${BATS_TEST_FILENAME}" .bats)"
 
 # Start a container with [testing] repos enabled
 container_start() {
@@ -19,10 +20,7 @@ container_start() {
   local project_root
   project_root=$(readlink -f "${BATS_TEST_DIRNAME}/..")
 
-  local test_suite_name
-  test_suite_name=$(basename "${BATS_TEST_FILENAME%.*}")
-
-  local host_source_dir="${project_root}/files/${test_suite_name}"
+  local host_source_dir="${project_root}/files/${_TARGET}"
   local container_work_dir="/files"
 
   # Construct the volume mapping parameter
@@ -65,6 +63,10 @@ crun() {
 }
 
 install_packages() {
+  local -a PACKAGES
+  PACKAGES+=("$(basename "${BATS_TEST_FILENAME}" .bats)")
+  PACKAGES+=("${EXTRA_PACKAGES[@]}")
+
   # Enable testing repositories in pacman.conf
   crun sed -i                                   \
     -e '/^#\[core-testing\]/s/^#//'             \
@@ -82,7 +84,7 @@ install_packages() {
     crun pacman -S --noconfirm "${PACKAGES[@]}"
     [ "$status" -ne 0 ] && fail "Failed to install packages: ${PACKAGES[*]}"
   fi
-  success "Packages:"
+  success "Package list:"
   for pkg in "${PACKAGES[@]}"; do
     crun bash -c "pacman -Qi ${pkg} | awk '/^Version/ {print \$3}'"
     echo "  📦 ${pkg}: ${output}" >&3

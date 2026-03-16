@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-export PACKAGES=(mpdecimal python)
+export EXTRA_PACKAGES=(python)
 
 load ../helpers/setup
 

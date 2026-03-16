@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-export PACKAGES=(openmp clang)
+export EXTRA_PACKAGES=(clang)
 
 load ../helpers/setup
 

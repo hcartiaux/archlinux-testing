@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
 
-export PACKAGES=(dash)
-
 load ../helpers/setup
 
 @test "dash is installed" {

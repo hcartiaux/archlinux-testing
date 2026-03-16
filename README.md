@@ -37,7 +37,7 @@ Run all tests:
 $ bats tests/
 git.bats
 
- ✓ Packages:
+ ✓ Package list:
   📦 git: 2.53.0-1
  ✓ git is installed
  ✓ git reports a version
@@ -47,16 +47,17 @@ git.bats
 
 openmp.bats
 
- ✓ Packages:
+ ✓ Package list:
   📦 openmp: 22.1.1-1
   📦 clang: 22.1.1-1
  ✓ openmp is installed
  ✓ clang can compile an openmp program
+ ✓ compiled program is linked to openmp
  ✓ compiled program can be executed
 
 tar.bats
 
- ✓ Packages:
+ ✓ Package list:
   📦 tar: 1.35-2
  ✓ tar is installed
  ✓ tar reports a version
@@ -73,7 +74,7 @@ Run a single file:
 $ bats tests/git.bats
 git.bats
 
- ✓ Packages:
+ ✓ Package list:
   📦 git: 2.53.0-1
  ✓ git is installed
  ✓ git reports a version

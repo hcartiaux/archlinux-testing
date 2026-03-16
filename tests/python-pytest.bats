@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
 
-export PACKAGES=(python-pytest)
-
 load ../helpers/setup
 
 @test "python-pytest is installed" {
