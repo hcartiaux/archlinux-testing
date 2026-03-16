@@ -21,10 +21,9 @@ is_linked_by_file() {
   local linked_libs
 
   crun bash -c "
-    ldd \"$file\"                      | \
-    awk '/=>/ {print \$3}'             | \
-    xargs pacman -Qo ${linked_libs[*]} | \
-    awk '{print \$(NF-1)}'             | \
+    ldd \"$file\"                       | \
+    awk '/=>/ {print \$3}'              | \
+    xargs pacman -Qoq ${linked_libs[*]} | \
     grep \"$dep\"
   "
 }
