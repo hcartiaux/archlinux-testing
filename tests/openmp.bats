@@ -19,7 +19,6 @@ load ../helpers/setup
   assert_success
 }
 
-
 @test "compiled program can be executed with 4 threads" {
   crun bash -c "OMP_NUM_THREADS=4 /tmp/hello_world"
   assert_output --partial "Hello World... from thread = 3"
