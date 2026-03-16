@@ -46,7 +46,7 @@ is_linked_by_pkg() {
 
   for f in "${files[@]}"; do
     is_linked_by_file "$f" "$dep"
-    if [[ $status == 0 ]]; then
+    if [ "$status" -eq 0 ]; then
       output="$pkg is linked to $dep by $f"
       status=0
       return
