@@ -5,10 +5,7 @@ export PACKAGES=(mpdecimal python)
 load '../helpers/setup'
 
 @test "Python is linked to mpdecimal" {
-  crun bash <<'EOF'
-    python_declib="$(pacman -Ql python | grep -o '/.*/_decimal\.cpython-.*.so')"
-    ldd "$python_declib" | grep libmpdec.so
-EOF
+  is_pkg_linked_to python mpdecimal
   assert_success
 }
 
