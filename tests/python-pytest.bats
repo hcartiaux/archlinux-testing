@@ -2,7 +2,7 @@
 
 export PACKAGES=(python-pytest)
 
-load '../helpers/setup'
+load ../helpers/setup
 
 @test "python-pytest is installed" {
   crun [ -f /usr/bin/pytest ]

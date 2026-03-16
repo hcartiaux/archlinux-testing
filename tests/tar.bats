@@ -1,8 +1,8 @@
 #!/usr/bin/env bats
 
-export PACKAGES="tar"
+export PACKAGES=(tar)
 
-load '../helpers/setup'
+load ../helpers/setup
 
 @test "tar is installed" {
   crun [ -f /usr/bin/tar ]
@@ -20,7 +20,7 @@ load '../helpers/setup'
     echo 'hello' > /tmp/tartest/src/file.txt
     tar -czf /tmp/tartest/archive.tar.gz -C /tmp/tartest/src .
   "
-  crun [ -f '/tmp/tartest/archive.tar.gz' ]
+  crun [ -f /tmp/tartest/archive.tar.gz ]
   assert_success
 }
 
@@ -29,7 +29,7 @@ load '../helpers/setup'
     mkdir -p /tmp/tartest/dst
     tar -xzf /tmp/tartest/archive.tar.gz -C /tmp/tartest/dst
   "
-  crun [ -f '/tmp/tartest/dst/file.txt' ]
+  crun [ -f /tmp/tartest/dst/file.txt ]
   assert_success
 }
 

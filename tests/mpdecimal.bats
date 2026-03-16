@@ -2,7 +2,7 @@
 
 export PACKAGES=(mpdecimal python)
 
-load '../helpers/setup'
+load ../helpers/setup
 
 @test "Python is linked to mpdecimal" {
   is_linked_by_pkg python

@@ -1,11 +1,11 @@
 #!/usr/bin/env bats
 
-export PACKAGES="git"
+export PACKAGES=(git)
 
-load '../helpers/setup'
+load ../helpers/setup
 
 @test "git is installed" {
-  crun [ -f '/usr/bin/git' ]
+  crun [ -f /usr/bin/git ]
   assert_success
 }
 
@@ -16,7 +16,7 @@ load '../helpers/setup'
 
 @test "git init creates a repository" {
   crun bash -c "mkdir -p /tmp/repo && git init /tmp/repo"
-  crun [ -d '/tmp/repo/.git' ]
+  crun [ -d /tmp/repo/.git ]
   assert_success
 }
 
@@ -25,7 +25,7 @@ load '../helpers/setup'
     cd /tmp/repo
     git config user.email 'test@test.local'
     git config user.name 'Test'
-    echo 'hello' > file.txt
+    echo hello > file.txt
     git add file.txt
     git commit -m 'initial commit'
   "
@@ -34,5 +34,5 @@ load '../helpers/setup'
 
 @test "git log shows the commit" {
   crun bash -c "cd /tmp/repo && git log --oneline"
-  assert_output --partial 'initial commit'
+  assert_output --partial "initial commit"
 }

@@ -2,7 +2,7 @@
 
 export PACKAGES=(dash)
 
-load '../helpers/setup'
+load ../helpers/setup
 
 @test "dash is installed" {
   crun [ -f /usr/bin/dash ]
